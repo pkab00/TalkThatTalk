@@ -9,6 +9,5 @@ public class LearningScreen extends JFrame {
         this.setTitle("Режим заучивания");
         this.setSize(750, 750);
         this.setResizable(false);
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 }

@@ -18,24 +18,30 @@ public class CustomToolBar extends JToolBar {
         JButton addButton = new JButton(new AddAction());
         JButton editButton = new JButton(new EditAction());
         JButton deleteButton = new JButton(new DeleteAction());
+        JButton learningButton = new JButton(new LearningAction());
 
         addButton.setBackground(AppPalette.BLUE);
         editButton.setBackground(AppPalette.BLUE);
         deleteButton.setBackground(AppPalette.BLUE);
+        learningButton.setBackground(AppPalette.BLUE);
 
         addButton.setBorderPainted(false);
         editButton.setBorderPainted(false);
         deleteButton.setBorderPainted(false);
+        learningButton.setBorderPainted(false);
 
         addButton.setFocusable(false);
         editButton.setFocusable(false);
         deleteButton.setFocusable(false);
+        learningButton.setFocusable(false);
 
         add(addButton);
         addSeparator();
         add(editButton);
         addSeparator();
         add(deleteButton);
+        addSeparator();
+        add(learningButton);
     }
     private boolean hasSelectedString(){
         return screen.getTable().getSelectedRow()!=-1;
@@ -89,6 +95,16 @@ public class CustomToolBar extends JToolBar {
                 JOptionPane.showMessageDialog(screen, "Сначала выберете строку в таблице.",
                 "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+    public class LearningAction extends AbstractAction {
+        public LearningAction(){
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"//learning.png"));
+            putValue(AbstractAction.SHORT_DESCRIPTION, "Начать заучивание...");
+        }
+        public void actionPerformed(ActionEvent e){
+            LearningScreen learningScreen = new LearningScreen(screen);
+            learningScreen.setVisible(true);
         }
     }
 }
