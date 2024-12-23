@@ -1,0 +1,7 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "terminal.integrated.shellArgs.windows": [
+        "-noexit",
+        "chcp 65001"
+    ],
+}
