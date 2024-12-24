@@ -2,10 +2,12 @@ package com.talk.THEMES;
 
 import java.awt.Color;
 
-public abstract class ThemeBuilder {
+public class ThemeBuilder {
     private Color 
     MAIN_COLOR1, MAIN_COLOR2, CONTRAST_COLOR,
     MAIN_TEXT_COLOR, CONTRAST_TEXT_COLOR, NEUTRAL_TEXT_COLOR;
+
+    public ThemeBuilder() {}
 
     public ThemeBuilder setMainColor1(Color color) {MAIN_COLOR1 = color; return this;}
     public ThemeBuilder setMainColor2(Color color) {MAIN_COLOR2 = color; return this;}

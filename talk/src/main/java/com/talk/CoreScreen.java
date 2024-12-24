@@ -1,4 +1,5 @@
 package com.talk;
+import com.talk.THEMES.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,9 +7,11 @@ import java.io.IOException;
 import java.awt.*;
 import javax.swing.*;
 
+
 public abstract class CoreScreen extends JFrame {
     public static final String IMAGES = "talk\\src\\main\\resources\\images";
     public static final Font FONT = loadFont();
+    public static Theme THEME = ThemeManager.MAIN;
 
     protected CoreScreen(){
         setIconImage(new ImageIcon(IMAGES+"\\icon.png").getImage());
