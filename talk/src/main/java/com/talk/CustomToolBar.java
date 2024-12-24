@@ -18,9 +18,9 @@ public class CustomToolBar extends JToolBar {
         JButton editButton = new JButton(new EditAction());
         JButton deleteButton = new JButton(new DeleteAction());
 
-        addButton.setBackground(AppPalette.BLUE);
-        editButton.setBackground(AppPalette.BLUE);
-        deleteButton.setBackground(AppPalette.BLUE);
+        addButton.setBackground(CoreScreen.THEME.getMainColor1());
+        editButton.setBackground(CoreScreen.THEME.getMainColor1());
+        deleteButton.setBackground(CoreScreen.THEME.getMainColor1());
 
         addButton.setBorderPainted(false);
         editButton.setBorderPainted(false);

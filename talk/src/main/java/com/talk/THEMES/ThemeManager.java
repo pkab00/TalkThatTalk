@@ -1,7 +1,5 @@
 package com.talk.THEMES;
 
-import com.talk.AppPalette;
-
 public abstract class ThemeManager {
     public static Theme MAIN = new ThemeBuilder()
     .setMainColor1(AppPalette.BLUE)

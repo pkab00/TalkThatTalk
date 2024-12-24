@@ -32,7 +32,7 @@ public class MainScreen extends CoreScreen{
         menuBar.add(createMenu());
         CustomToolBar toolBar = new CustomToolBar(this);
         toolBar.setFloatable(false);
-        toolBar.setBackground(AppPalette.LIGHT_BLUE);
+        toolBar.setBackground(THEME.getMainColor2());
         add(toolBar, BorderLayout.NORTH);
     }
 
@@ -64,8 +64,8 @@ public class MainScreen extends CoreScreen{
             table.setAutoCreateRowSorter(true);
             table.getTableHeader().setReorderingAllowed(false);
             table.getTableHeader().setResizingAllowed(false);
-            table.getTableHeader().setBackground(AppPalette.DARK_BLUE);
-            table.getTableHeader().setForeground(AppPalette.WHITE);
+            table.getTableHeader().setBackground(THEME.getContrastColor());
+            table.getTableHeader().setForeground(THEME.getContrastTextColor());
 
             DefaultTableCellRenderer renderer = new CustomCellRenderer();
             renderer.setHorizontalAlignment(JLabel.CENTER);

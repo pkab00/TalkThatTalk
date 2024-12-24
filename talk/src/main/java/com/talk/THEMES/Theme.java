@@ -15,4 +15,11 @@ public class Theme {
         CONTRAST_TEXT_COLOR = builder.getContrastTextColor();
         NEUTRAL_TEXT_COLOR = builder.getNeutralTextColor();
     }
+
+    public Color getMainColor1() {return MAIN_COLOR1;}
+    public Color getMainColor2() {return MAIN_COLOR2;}
+    public Color getContrastColor() {return CONTRAST_COLOR;}
+    public Color getMainTextColor() {return MAIN_TEXT_COLOR;}
+    public Color getContrastTextColor() {return CONTRAST_TEXT_COLOR;}
+    public Color getNeutralTextColor() {return NEUTRAL_TEXT_COLOR;}
 }
