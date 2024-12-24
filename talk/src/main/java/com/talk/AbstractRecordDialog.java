@@ -15,14 +15,13 @@ import java.util.ArrayList;
  * Абстракный метод processData() для обработки полученных данных должен быть переопределён.
  */
 
-public abstract class AbstractRecordDialog extends JFrame {
+public abstract class AbstractRecordDialog extends CoreScreen {
     private static ArrayList<String> data = null;
     private JTextField field1, field2, field3;
     private JButton actionButton;
+
     public AbstractRecordDialog(String title){
         super();
-        setIconImage(new ImageIcon("talk\\src\\main\\resources\\images\\icon.png").getImage());
-        MainScreen.setLook();
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -36,7 +35,7 @@ public abstract class AbstractRecordDialog extends JFrame {
         JLabel titleLabel = new JLabel(title);
         titleLabel.setForeground(AppPalette.DARK_BLUE);
         titleLabel.setBackground(AppPalette.BLUE);
-        titleLabel.setFont(MainScreen.loadFont().deriveFont(25f));
+        titleLabel.setFont(FONT.deriveFont(25f));
         JPanel upPanel = new JPanel();
         upPanel.setBackground(AppPalette.LIGHT_BLUE);
         upPanel.add(titleLabel);

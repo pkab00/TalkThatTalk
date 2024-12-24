@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
  */
 
 public class CustomToolBar extends JToolBar {
-    private static final String IMAGES = "talk\\src\\main\\resources\\images";
     private final MainScreen screen;
     public CustomToolBar(MainScreen screen){
         super();
@@ -42,7 +41,7 @@ public class CustomToolBar extends JToolBar {
     }
     private class AddAction extends AbstractAction{
         public AddAction(){
-            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"\\add.png"));
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"\\add.png"));
             putValue(AbstractAction.SHORT_DESCRIPTION, "Добавить новую запись...");
         }
         public void actionPerformed(ActionEvent e){
@@ -52,7 +51,7 @@ public class CustomToolBar extends JToolBar {
     }
     private class EditAction extends AbstractAction{
         public EditAction(){
-            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"\\edit.png"));
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"\\edit.png"));
             putValue(AbstractAction.SHORT_DESCRIPTION, "Редактировать запись...");
         }
         public void actionPerformed(ActionEvent e){
@@ -67,7 +66,7 @@ public class CustomToolBar extends JToolBar {
     }
     private class DeleteAction extends AbstractAction{
         public DeleteAction(){
-            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"\\delete.png"));
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"\\delete.png"));
             putValue(AbstractAction.SHORT_DESCRIPTION, "Удалить запись...");
         }
         public void actionPerformed(ActionEvent e){

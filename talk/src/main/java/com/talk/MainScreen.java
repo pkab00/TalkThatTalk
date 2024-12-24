@@ -16,15 +16,14 @@ import com.talk.DBManager.ORDER_BY;
  * Вклюаяет в себя строку меню, панель инструментов и таблицу слов.
  */
 
-public class MainScreen extends JFrame{
+public class MainScreen extends CoreScreen{
     private final JTable mainTable;
 
     public MainScreen(){
-        super("TalkThatTalk");
+        setTitle("TalkThatTalk");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(1000,800);
         setVisible(true);
-        setIconImage(new ImageIcon("talk\\src\\main\\resources\\images\\icon.png").getImage());
         setLayout(new BorderLayout());
         mainTable = createTable();
         add(new JScrollPane(mainTable), BorderLayout.CENTER);
@@ -35,29 +34,6 @@ public class MainScreen extends JFrame{
         toolBar.setFloatable(false);
         toolBar.setBackground(AppPalette.LIGHT_BLUE);
         add(toolBar, BorderLayout.NORTH);
-    }
-
-    public static Font loadFont(){
-        try{
-            Font font = Font.createFont(Font.TRUETYPE_FONT,
-            new File("talk\\src\\main\\resources\\NotoSansKR-Medium.ttf"));
-            return font;
-        } catch(FontFormatException | IOException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static void setLook(){
-        Font font = loadFont();
-        float fontSize = 12f;
-        UIManager.put("ToolTip.font", font.deriveFont(fontSize));
-        UIManager.put("Label.font", font.deriveFont(fontSize));
-        UIManager.put("Menu.font", font.deriveFont(fontSize));
-        UIManager.put("MenuItem.font", font.deriveFont(fontSize));
-        UIManager.put("TextField.font", font.deriveFont(fontSize));
-        UIManager.put("OptionPane.buttonFont", font.deriveFont(fontSize));
-        UIManager.put("OptionPane.messageFont", font.deriveFont(fontSize));
     }
 
     public void refreshTable(){
@@ -80,10 +56,9 @@ public class MainScreen extends JFrame{
             DBTableModel model = new DBTableModel();
             model.setDataSource(new DBManager().getBase(ORDER_BY.ID));
             JTable table = new JTable(model);
-            Font font = loadFont();
             setLook();
-            table.setFont(font.deriveFont(20f));
-            table.getTableHeader().setFont(font.deriveFont(15f));
+            table.setFont(FONT.deriveFont(20f));
+            table.getTableHeader().setFont(FONT.deriveFont(15f));
             table.setRowHeight(30);
             table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             table.setAutoCreateRowSorter(true);
