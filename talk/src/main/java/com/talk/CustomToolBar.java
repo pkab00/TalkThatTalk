@@ -1,7 +1,9 @@
 package com.talk;
 
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
+import java.util.*;
 
 /*
  * CustomToolBar
@@ -14,27 +16,20 @@ public class CustomToolBar extends JToolBar {
     public CustomToolBar(MainScreen screen){
         super();
         this.screen = screen;
-        JButton addButton = new JButton(new AddAction());
-        JButton editButton = new JButton(new EditAction());
-        JButton deleteButton = new JButton(new DeleteAction());
+        List<JButton> buttonsList = List.of(
+            new JButton(new AddAction()),
+            new JButton(new EditAction()),
+            new JButton(new DeleteAction()),
+            new JButton(new SettingsAction()));
 
-        addButton.setBackground(CoreScreen.THEME.getMainColor1());
-        editButton.setBackground(CoreScreen.THEME.getMainColor1());
-        deleteButton.setBackground(CoreScreen.THEME.getMainColor1());
-
-        addButton.setBorderPainted(false);
-        editButton.setBorderPainted(false);
-        deleteButton.setBorderPainted(false);
-
-        addButton.setFocusable(false);
-        editButton.setFocusable(false);
-        deleteButton.setFocusable(false);
-
-        add(addButton);
-        addSeparator();
-        add(editButton);
-        addSeparator();
-        add(deleteButton);
+            buttonsList.stream()
+            .forEach((x) -> {
+                x.setBackground(CoreScreen.THEME.getMainColor1());
+                x.setBorderPainted(false);
+                x.setFocusable(false);
+                add(x);
+                addSeparator();
+            });
     }
     private boolean hasSelectedString(){
         return screen.getTable().getSelectedRow()!=-1;
@@ -88,6 +83,15 @@ public class CustomToolBar extends JToolBar {
                 JOptionPane.showMessageDialog(screen, "Сначала выберете строку в таблице.",
                 "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+    private class SettingsAction extends AbstractAction{
+        public SettingsAction(){
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"//settings.png"));
+            putValue(AbstractAction.SHORT_DESCRIPTION, "Открыть меню настроек...");
+        }
+        public void actionPerformed(ActionEvent e){
+
         }
     }
 }

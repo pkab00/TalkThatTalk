@@ -11,7 +11,7 @@ import javax.swing.*;
 public abstract class CoreScreen extends JFrame {
     public static final String IMAGES = "talk\\src\\main\\resources\\images";
     public static final Font FONT = loadFont();
-    public static Theme THEME = ThemeManager.getTheme("Autumn");
+    public static Theme THEME = ThemeManager.getTheme();
 
     protected CoreScreen(){
         setIconImage(new ImageIcon(IMAGES+"\\icon.png").getImage());
