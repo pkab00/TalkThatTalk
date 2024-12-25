@@ -6,13 +6,20 @@ import java.util.*;
 public abstract class ThemeManager {
     private final static String THEME_SETTINGS = "talk\\src\\main\\resources\\settings\\theme.txt";
     private final static Map<String,Theme> themeMap = Map.of(
-        "WINTER", new ThemeBuilder()
+        "Winter", new ThemeBuilder()
         .setMainColor1(AppPalette.BLUE)
         .setMainColor2(AppPalette.LIGHT_BLUE)
         .setContrastColor(AppPalette.DARK_BLUE)
         .setMainTextColor(AppPalette.DARK_BLUE)
         .setContrastTextColor(AppPalette.WHITE)
-        .setNeutralTextColor(AppPalette.BLACK).build()
+        .setNeutralTextColor(AppPalette.BLACK).build(),
+        "Autumn", new ThemeBuilder()
+        .setMainColor1(AppPalette.ORANGE)
+        .setMainColor2(AppPalette.LIGHT_ORANGE)
+        .setContrastColor(AppPalette.AUTUMN_PURPLE)
+        .setMainTextColor(AppPalette.AUTUMN_BLUE)
+        .setContrastTextColor(AppPalette.WHITE)
+        .setMainTextColor(AppPalette.BLACK).build()
     );
 
     public static Theme getTheme(String themeName){
@@ -24,7 +31,7 @@ public abstract class ThemeManager {
     }
 
     public static String readSettingsFile(){
-        String output = "WINTER";
+        String output = themeMap.keySet().iterator().next();
         try{
             Scanner scanner = new Scanner(new File(THEME_SETTINGS));
             if(scanner.hasNextLine()){

@@ -16,7 +16,7 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
     {
         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, 
                                                                     hasFocus, row, column);
-        label.setForeground(CoreScreen.THEME.getContrastColor());
+        label.setForeground(CoreScreen.THEME.getMainTextColor());
         setToolTipText(label.getText());
         if(isSelected){
             label.setBackground(CoreScreen.THEME.getContrastColor());

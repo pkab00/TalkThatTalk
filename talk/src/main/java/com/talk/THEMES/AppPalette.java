@@ -23,4 +23,14 @@ public abstract class AppPalette {
     public static final Color BLACK = new Color(0, 0, 0);
     //0xffffff
     public static final Color WHITE = new Color(255, 255, 255);
+    //0xE36414
+    public static final Color ORANGE = new Color(227, 100, 20);
+    //0xFB8B24
+    public static final Color LIGHT_ORANGE = new Color(251, 139, 36);
+    //0x0F4C5C
+    public static final Color AUTUMN_BLUE = new Color(15, 76, 92);
+    //0x9A031E
+    public static final Color AUTUMN_RED = new Color(154, 3, 30);
+    //0x5F0F40
+    public static final Color AUTUMN_PURPLE = new Color(95, 15, 64);
 }
