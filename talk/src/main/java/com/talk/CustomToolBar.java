@@ -91,7 +91,8 @@ public class CustomToolBar extends JToolBar {
             putValue(AbstractAction.SHORT_DESCRIPTION, "Открыть меню настроек...");
         }
         public void actionPerformed(ActionEvent e){
-
+            SettingsScreen settingsScreen = new SettingsScreen();
+            settingsScreen.setVisible(true);
         }
     }
 }
