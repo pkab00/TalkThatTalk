@@ -2,6 +2,8 @@ package com.talk;
 
 import javax.swing.*;
 
+import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
@@ -16,17 +18,22 @@ public class CustomToolBar extends JToolBar {
     public CustomToolBar(MainScreen screen){
         super();
         this.screen = screen;
-        List<JButton> buttonsList = List.of(
+        List<Component> componentsList = List.of(
             new JButton(new AddAction()),
             new JButton(new EditAction()),
             new JButton(new DeleteAction()),
-            new JButton(new SettingsAction()));
+            Box.createHorizontalGlue(),
+            new JButton(new SettingsAction()),
+            new JButton(new QuitAction())
+        );
 
-            buttonsList.stream()
+            componentsList.stream()
             .forEach((x) -> {
-                x.setBackground(CoreScreen.THEME.getMainColor1());
-                x.setBorderPainted(false);
-                x.setFocusable(false);
+                if(x instanceof JButton){
+                    x.setBackground(CoreScreen.THEME.getMainColor1());
+                    ((JButton)x).setBorderPainted(false); // looks horrible but still works
+                    x.setFocusable(false);
+                }
                 add(x);
                 addSeparator();
             });
@@ -93,6 +100,15 @@ public class CustomToolBar extends JToolBar {
         public void actionPerformed(ActionEvent e){
             SettingsScreen settingsScreen = new SettingsScreen();
             settingsScreen.setVisible(true);
+        }
+    }
+    private class QuitAction extends AbstractAction{
+        public QuitAction(){
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"//quit.png"));
+            putValue(AbstractAction.SHORT_DESCRIPTION, "Закрыть программу...");
+        }
+        public void actionPerformed(ActionEvent e){
+            System.exit(0);
         }
     }
 }
