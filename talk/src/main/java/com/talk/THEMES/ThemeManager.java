@@ -2,7 +2,6 @@ package com.talk.THEMES;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class ThemeManager {
     private final static String THEME_SETTINGS = "talk\\src\\main\\resources\\settings\\theme.txt";
@@ -20,7 +19,14 @@ public abstract class ThemeManager {
         .setContrastColor(AppPalette.AUTUMN_PURPLE)
         .setMainTextColor(AppPalette.AUTUMN_BLUE)
         .setContrastTextColor(AppPalette.WHITE)
-        .setMainTextColor(AppPalette.BLACK).build()
+        .setMainTextColor(AppPalette.BLACK).build(),
+        "Black'n'White", new ThemeBuilder()
+        .setMainColor1(AppPalette.WHITE)
+        .setMainColor2(AppPalette.WHITE)
+        .setContrastColor(AppPalette.BLACK)
+        .setMainTextColor(AppPalette.BLACK)
+        .setNeutralTextColor(AppPalette.BLACK)
+        .setContrastTextColor(AppPalette.WHITE).build()
     );
 
     public static Vector<String> getThemesList(){

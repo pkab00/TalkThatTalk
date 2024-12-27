@@ -3,7 +3,6 @@ package com.talk;
 import javax.swing.*;
 
 import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
