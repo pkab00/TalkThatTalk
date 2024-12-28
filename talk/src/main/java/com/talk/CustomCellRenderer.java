@@ -16,16 +16,16 @@ public class CustomCellRenderer extends DefaultTableCellRenderer {
     {
         JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, 
                                                                     hasFocus, row, column);
-        label.setForeground(AppPalette.DARK_BLUE);
+        label.setForeground(CoreScreen.THEME.getMainTextColor());
         setToolTipText(label.getText());
         if(isSelected){
-            label.setBackground(AppPalette.DARK_BLUE);
-            label.setForeground(AppPalette.WHITE);
+            label.setBackground(CoreScreen.THEME.getContrastColor());
+            label.setForeground(CoreScreen.THEME.getContrastTextColor());
         }
         else if(row%2==0){
-            label.setBackground(AppPalette.BLUE);
+            label.setBackground(CoreScreen.THEME.getMainColor1());
         } else{
-            label.setBackground(AppPalette.LIGHT_BLUE);
+            label.setBackground(CoreScreen.THEME.getMainColor2());
         }
         if(column==3){
             label.setText("<html><i>"+label.getText()+"</html></i>");

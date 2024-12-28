@@ -15,14 +15,14 @@ import java.util.ArrayList;
  * Абстракный метод processData() для обработки полученных данных должен быть переопределён.
  */
 
-public abstract class AbstractRecordDialog extends JFrame {
+public abstract class AbstractRecordDialog extends CoreScreen {
     private static ArrayList<String> data = null;
     private JTextField field1, field2, field3;
     private JButton actionButton;
+
     public AbstractRecordDialog(String title){
         super();
-        setIconImage(new ImageIcon("talk\\src\\main\\resources\\images\\icon.png").getImage());
-        MainScreen.setLook();
+        setTitle(title);
         setSize(500, 400);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -34,20 +34,20 @@ public abstract class AbstractRecordDialog extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JLabel titleLabel = new JLabel(title);
-        titleLabel.setForeground(AppPalette.DARK_BLUE);
-        titleLabel.setBackground(AppPalette.BLUE);
-        titleLabel.setFont(MainScreen.loadFont().deriveFont(25f));
+        titleLabel.setForeground(THEME.getMainTextColor());
+        titleLabel.setBackground(THEME.getMainColor1());
+        titleLabel.setFont(FONT.deriveFont(25f));
         JPanel upPanel = new JPanel();
-        upPanel.setBackground(AppPalette.LIGHT_BLUE);
+        upPanel.setBackground(THEME.getMainColor2());
         upPanel.add(titleLabel);
         panel.add(upPanel, BorderLayout.NORTH);
 
         JPanel firstRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel label1 = new JLabel();
         label1.setText("Русский: ");
-        label1.setForeground(AppPalette.DARK_BLUE);
+        label1.setForeground(THEME.getMainTextColor());
         firstRow.add(label1);
-        firstRow.setBackground(AppPalette.LIGHT_BLUE);
+        firstRow.setBackground(THEME.getMainColor2());
         field1 = new JTextField();
         field1.setPreferredSize(new Dimension(350,30));
         firstRow.add(field1);
@@ -55,9 +55,9 @@ public abstract class AbstractRecordDialog extends JFrame {
         JPanel secondRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel label2 = new JLabel();
         label2.setText("Корейский: ");
-        label2.setForeground(AppPalette.DARK_BLUE);
+        label2.setForeground(THEME.getMainTextColor());
         secondRow.add(label2);
-        secondRow.setBackground(AppPalette.LIGHT_BLUE);
+        secondRow.setBackground(THEME.getMainColor2());
         field2 = new JTextField();
         field2.setPreferredSize(new Dimension(330,30));
         secondRow.add(field2);
@@ -65,9 +65,9 @@ public abstract class AbstractRecordDialog extends JFrame {
         JPanel thirdRow = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel label3 = new JLabel();
         label3.setText("Транскрипция: ");
-        label3.setForeground(AppPalette.DARK_BLUE);
+        label3.setForeground(THEME.getMainTextColor());
         thirdRow.add(label3);
-        thirdRow.setBackground(AppPalette.LIGHT_BLUE);
+        thirdRow.setBackground(THEME.getMainColor2());
         field3 = new JTextField();
         field3.setPreferredSize(new Dimension(310,30));
         thirdRow.add(field3);
@@ -76,7 +76,7 @@ public abstract class AbstractRecordDialog extends JFrame {
         panel.add(secondRow);
         panel.add(thirdRow);
         actionButton = new JButton("Готово");
-        actionButton.setBackground(AppPalette.BLUE);
+        actionButton.setBackground(THEME.getMainColor1());
         actionButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 setData();
@@ -84,7 +84,7 @@ public abstract class AbstractRecordDialog extends JFrame {
             }
         });
         JPanel lowPanel = new JPanel();
-        lowPanel.setBackground(AppPalette.LIGHT_BLUE);
+        lowPanel.setBackground(THEME.getMainColor2());
         lowPanel.add(actionButton);
         panel.add(lowPanel, BorderLayout.SOUTH);
         return panel;

@@ -1,7 +1,10 @@
 package com.talk;
 
 import javax.swing.*;
+
+import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.*;
 
 /*
  * CustomToolBar
@@ -10,45 +13,36 @@ import java.awt.event.ActionEvent;
  */
 
 public class CustomToolBar extends JToolBar {
-    private static final String IMAGES = "talk\\src\\main\\resources\\images";
     private final MainScreen screen;
     public CustomToolBar(MainScreen screen){
         super();
         this.screen = screen;
-        JButton addButton = new JButton(new AddAction());
-        JButton editButton = new JButton(new EditAction());
-        JButton deleteButton = new JButton(new DeleteAction());
-        JButton learningButton = new JButton(new LearningAction());
+        List<Component> componentsList = List.of(
+            new JButton(new AddAction()),
+            new JButton(new EditAction()),
+            new JButton(new DeleteAction()),
+            Box.createHorizontalGlue(),
+            new JButton(new SettingsAction()),
+            new JButton(new QuitAction())
+        );
 
-        addButton.setBackground(AppPalette.BLUE);
-        editButton.setBackground(AppPalette.BLUE);
-        deleteButton.setBackground(AppPalette.BLUE);
-        learningButton.setBackground(AppPalette.BLUE);
-
-        addButton.setBorderPainted(false);
-        editButton.setBorderPainted(false);
-        deleteButton.setBorderPainted(false);
-        learningButton.setBorderPainted(false);
-
-        addButton.setFocusable(false);
-        editButton.setFocusable(false);
-        deleteButton.setFocusable(false);
-        learningButton.setFocusable(false);
-
-        add(addButton);
-        addSeparator();
-        add(editButton);
-        addSeparator();
-        add(deleteButton);
-        addSeparator();
-        add(learningButton);
+            componentsList.stream()
+            .forEach((x) -> {
+                if(x instanceof JButton){
+                    x.setBackground(CoreScreen.THEME.getMainColor1());
+                    ((JButton)x).setBorderPainted(false); // looks horrible but still works
+                    x.setFocusable(false);
+                }
+                add(x);
+                addSeparator();
+            });
     }
     private boolean hasSelectedString(){
         return screen.getTable().getSelectedRow()!=-1;
     }
     private class AddAction extends AbstractAction{
         public AddAction(){
-            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"\\add.png"));
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"\\add.png"));
             putValue(AbstractAction.SHORT_DESCRIPTION, "Добавить новую запись...");
         }
         public void actionPerformed(ActionEvent e){
@@ -58,7 +52,7 @@ public class CustomToolBar extends JToolBar {
     }
     private class EditAction extends AbstractAction{
         public EditAction(){
-            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"\\edit.png"));
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"\\edit.png"));
             putValue(AbstractAction.SHORT_DESCRIPTION, "Редактировать запись...");
         }
         public void actionPerformed(ActionEvent e){
@@ -73,7 +67,7 @@ public class CustomToolBar extends JToolBar {
     }
     private class DeleteAction extends AbstractAction{
         public DeleteAction(){
-            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"\\delete.png"));
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"\\delete.png"));
             putValue(AbstractAction.SHORT_DESCRIPTION, "Удалить запись...");
         }
         public void actionPerformed(ActionEvent e){
@@ -95,6 +89,25 @@ public class CustomToolBar extends JToolBar {
                 JOptionPane.showMessageDialog(screen, "Сначала выберете строку в таблице.",
                 "Ошибка", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+    private class SettingsAction extends AbstractAction{
+        public SettingsAction(){
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"//settings.png"));
+            putValue(AbstractAction.SHORT_DESCRIPTION, "Открыть меню настроек...");
+        }
+        public void actionPerformed(ActionEvent e){
+            SettingsScreen settingsScreen = new SettingsScreen();
+            settingsScreen.setVisible(true);
+        }
+    }
+    private class QuitAction extends AbstractAction{
+        public QuitAction(){
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"//quit.png"));
+            putValue(AbstractAction.SHORT_DESCRIPTION, "Закрыть программу...");
+        }
+        public void actionPerformed(ActionEvent e){
+            System.exit(0);
         }
     }
     public class LearningAction extends AbstractAction {
