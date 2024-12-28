@@ -21,6 +21,7 @@ public class CustomToolBar extends JToolBar {
             new JButton(new AddAction()),
             new JButton(new EditAction()),
             new JButton(new DeleteAction()),
+            new JButton(new LearningAction()),
             Box.createHorizontalGlue(),
             new JButton(new SettingsAction()),
             new JButton(new QuitAction())
@@ -112,7 +113,7 @@ public class CustomToolBar extends JToolBar {
     }
     public class LearningAction extends AbstractAction {
         public LearningAction(){
-            putValue(AbstractAction.SMALL_ICON, new ImageIcon(IMAGES+"//learning.png"));
+            putValue(AbstractAction.SMALL_ICON, new ImageIcon(CoreScreen.IMAGES+"//learning.png"));
             putValue(AbstractAction.SHORT_DESCRIPTION, "Начать заучивание...");
         }
         public void actionPerformed(ActionEvent e){
