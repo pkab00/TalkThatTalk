@@ -45,6 +45,18 @@ public class DBManager {
         return set;
     }
 
+    public ResultSet getRusAndKor(){
+        ResultSet set = null;
+        try{
+            String sql = "select rus, kor from main";
+            set = statement.executeQuery(sql);
+            
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return set;
+    }
+
     public void addNewRecord(ArrayList<String> data){
         try{
             String sql = "insert into main(rus, kor, transcription) values(?, ?, ?);";
