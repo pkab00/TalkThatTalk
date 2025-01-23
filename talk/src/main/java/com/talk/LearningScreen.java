@@ -11,6 +11,7 @@ public class LearningScreen extends CoreScreen {
     private final int NUM_COLS = 3;
     private int LEARNED_CARDS = 0;
     private JButton PICKED_CARD = null;
+    private ArrayList<JButton> buttonsList = new ArrayList<>();
     private MainScreen scr;
     public LearningScreen(MainScreen scr){
         this.scr = scr;
@@ -21,7 +22,6 @@ public class LearningScreen extends CoreScreen {
     }
 
     private JPanel createPanel(){
-        Map<String,JButton> buttonMap = new HashMap<>();
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(NUM_CARDS/NUM_COLS, NUM_COLS));
         HashMap<String,String> preprocessedData = prepareData();
@@ -39,14 +39,18 @@ public class LearningScreen extends CoreScreen {
                     if((preprocessedData.containsKey(PICKED_TEXT) && preprocessedData.get(PICKED_TEXT).equals(TEXT)) 
                     || (preprocessedData.containsKey(TEXT) && preprocessedData.get(TEXT).equals(PICKED_TEXT))){
                         newButton.setBackground(MainScreen.THEME.getMainColor1());
-                        newButton.setText("<html><s>"+TEXT+"</html></s>");
-                        PICKED_CARD.setText("<html><s>"+PICKED_TEXT+"</html></s>");
+                        newButton.setText("<html><s><i>"+TEXT+"</html></s></i>");
+                        PICKED_CARD.setText("<html><s><i>"+PICKED_TEXT+"</html></s></i>");
                         newButton.setEnabled(false);
                         PICKED_CARD.setEnabled(false);
                         PICKED_CARD = null;
                         LEARNED_CARDS++;
-                        if(LEARNED_CARDS == NUM_CARDS/2){
-                            // todo
+                        if(LEARNED_CARDS%(NUM_CARDS/2) == 0){
+                            preprocessedData.clear();
+                            preprocessedData.putAll(prepareData());
+                            processedData.clear();
+                            processedData.addAll(processData(preprocessedData));
+                            updateCards(processedData);
                         }
                     }
                 }
@@ -55,7 +59,7 @@ public class LearningScreen extends CoreScreen {
             newButton.setBackground(MainScreen.THEME.getMainColor2());
             newButton.setForeground(MainScreen.THEME.getMainTextColor());
             newButton.setBorderPainted(false);
-            buttonMap.put(newButton.getText(), newButton);
+            buttonsList.add(newButton);
             panel.add(newButton);
         }
         return panel;
@@ -90,5 +94,26 @@ public class LearningScreen extends CoreScreen {
         }
         Collections.shuffle(processedData);
         return processedData;
+    }
+
+    private void updateCards(ArrayList<String> words){
+        var buttons = getButtons();
+        for(int i = 0; i < getCardsNumber(); i++){
+            JButton button = buttons.get(i);
+            button.setText(words.get(i));
+            button.setBackground(MainScreen.THEME.getMainColor2());
+            button.setForeground(MainScreen.THEME.getMainTextColor());
+            button.setEnabled(true);
+        }
+    }
+
+    public int getCardsNumber(){
+        return NUM_CARDS;
+    }
+    public int getColumnsNumber(){
+        return NUM_COLS;
+    }
+    public ArrayList<JButton> getButtons(){
+        return buttonsList;
     }
 }
