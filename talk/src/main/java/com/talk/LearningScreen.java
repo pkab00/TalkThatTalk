@@ -12,13 +12,31 @@ public class LearningScreen extends CoreScreen {
     private int LEARNED_CARDS = 0;
     private JButton PICKED_CARD = null;
     private ArrayList<JButton> buttonsList = new ArrayList<>();
+    private JLabel pairsCountingLabel;
     private MainScreen scr;
     public LearningScreen(MainScreen scr){
         this.scr = scr;
         this.setTitle("Режим заучивания");
         this.setSize(NUM_COLS*300, 750);
         this.setResizable(true);
-        add(createPanel());
+        setLayout(new BorderLayout());
+        add(createTopBar(), BorderLayout.NORTH);
+        add(createPanel(), BorderLayout.CENTER);
+    }
+
+    private JPanel createTopBar(){
+        JPanel topBar = new JPanel();
+        Font font = MainScreen.loadFont().deriveFont(25f);
+        pairsCountingLabel = new JLabel();
+        pairsCountingLabel.setFont(font);
+        pairsCountingLabel.setText("Очки: "+LEARNED_CARDS);
+        pairsCountingLabel.setForeground(MainScreen.THEME.getContrastTextColor());
+        topBar.setLayout(new BoxLayout(topBar, BoxLayout.Y_AXIS));
+        topBar.setBackground(MainScreen.THEME.getContrastColor());
+        
+        topBar.add(Box.createHorizontalStrut(10));
+        topBar.add(pairsCountingLabel);
+        return topBar;
     }
 
     private JPanel createPanel(){
@@ -45,6 +63,7 @@ public class LearningScreen extends CoreScreen {
                         PICKED_CARD.setEnabled(false);
                         PICKED_CARD = null;
                         LEARNED_CARDS++;
+                        updateCounterLabel();
                         if(LEARNED_CARDS%(NUM_CARDS/2) == 0){
                             preprocessedData.clear();
                             preprocessedData.putAll(prepareData());
@@ -107,11 +126,18 @@ public class LearningScreen extends CoreScreen {
         }
     }
 
+    private void updateCounterLabel(){
+        pairsCountingLabel.setText("Очки: "+getLearnedCards());
+    }
+
     public int getCardsNumber(){
         return NUM_CARDS;
     }
     public int getColumnsNumber(){
         return NUM_COLS;
+    }
+    public int getLearnedCards(){
+        return LEARNED_CARDS;
     }
     public ArrayList<JButton> getButtons(){
         return buttonsList;
