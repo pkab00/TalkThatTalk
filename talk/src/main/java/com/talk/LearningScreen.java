@@ -19,6 +19,7 @@ public class LearningScreen extends CoreScreen {
     private JPanel panel;
     private JLabel pairsCountingLabel;
     private MainScreen scr;
+    
     public LearningScreen(MainScreen scr){
         this.scr = scr;
         this.setTitle("Режим заучивания");
