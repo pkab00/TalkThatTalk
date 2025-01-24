@@ -1,23 +1,28 @@
 package com.talk;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.*;
 import java.util.*;
 import java.util.List;
 
 public class LearningScreen extends CoreScreen {
-    private final int NUM_CARDS = 6;
-    private final int NUM_COLS = 3;
+    private final int NUM_COLS = 2;
+    private int NUM_CARDS = NUM_COLS*2;
+    private final int LEVEL_MULTIPLIER = NUM_CARDS;
+    private int LEVELS_COMPLETED = 0;
     private int LEARNED_CARDS = 0;
-    private JButton PICKED_CARD = null;
-    private ArrayList<JButton> buttonsList = new ArrayList<>();
+    private static MemoCard SELECTED_CARD = null;
+    private ArrayList<MemoCard> cardsList = new ArrayList<>();
+    private JPanel panel;
     private JLabel pairsCountingLabel;
     private MainScreen scr;
     public LearningScreen(MainScreen scr){
         this.scr = scr;
         this.setTitle("Режим заучивания");
-        this.setSize(NUM_COLS*300, 750);
+        this.setSize(NUM_COLS*600, 750);
         this.setResizable(true);
         setLayout(new BorderLayout());
         add(createTopBar(), BorderLayout.NORTH);
@@ -40,47 +45,9 @@ public class LearningScreen extends CoreScreen {
     }
 
     private JPanel createPanel(){
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new GridLayout(NUM_CARDS/NUM_COLS, NUM_COLS));
-        HashMap<String,String> preprocessedData = prepareData();
-        ArrayList<String> processedData = processData(preprocessedData);
-        for(int i = 0; i < NUM_CARDS; i++){
-            JButton newButton = new JButton(processedData.get(i));
-            newButton.addActionListener((e) -> {
-                if(PICKED_CARD == null){
-                    PICKED_CARD = newButton;
-                    newButton.setBackground(MainScreen.THEME.getMainColor1());
-                }
-                else{
-                    String TEXT = newButton.getText();
-                    String PICKED_TEXT = PICKED_CARD.getText();
-                    if((preprocessedData.containsKey(PICKED_TEXT) && preprocessedData.get(PICKED_TEXT).equals(TEXT)) 
-                    || (preprocessedData.containsKey(TEXT) && preprocessedData.get(TEXT).equals(PICKED_TEXT))){
-                        newButton.setBackground(MainScreen.THEME.getMainColor1());
-                        newButton.setText("<html><s><i>"+TEXT+"</html></s></i>");
-                        PICKED_CARD.setText("<html><s><i>"+PICKED_TEXT+"</html></s></i>");
-                        newButton.setEnabled(false);
-                        PICKED_CARD.setEnabled(false);
-                        PICKED_CARD = null;
-                        LEARNED_CARDS++;
-                        updateCounterLabel();
-                        if(LEARNED_CARDS%(NUM_CARDS/2) == 0){
-                            preprocessedData.clear();
-                            preprocessedData.putAll(prepareData());
-                            processedData.clear();
-                            processedData.addAll(processData(preprocessedData));
-                            updateCards(processedData);
-                        }
-                    }
-                }
-            });
-            newButton.setFont(MainScreen.loadFont().deriveFont(30f));
-            newButton.setBackground(MainScreen.THEME.getMainColor2());
-            newButton.setForeground(MainScreen.THEME.getMainTextColor());
-            newButton.setBorderPainted(false);
-            buttonsList.add(newButton);
-            panel.add(newButton);
-        }
+        updateCards();
         return panel;
     }
 
@@ -111,23 +78,59 @@ public class LearningScreen extends CoreScreen {
             processedData.add(entry.getKey());
             processedData.add(entry.getValue());
         }
-        Collections.shuffle(processedData);
         return processedData;
     }
 
-    private void updateCards(ArrayList<String> words){
-        var buttons = getButtons();
-        for(int i = 0; i < getCardsNumber(); i++){
-            JButton button = buttons.get(i);
-            button.setText(words.get(i));
-            button.setBackground(MainScreen.THEME.getMainColor2());
-            button.setForeground(MainScreen.THEME.getMainTextColor());
-            button.setEnabled(true);
+    private void updateCards(){
+        class EndLevelListener implements ActionListener{
+            @Override
+            public void actionPerformed(ActionEvent e){
+                MemoCard sourceCard = (MemoCard)e.getSource();
+                if(sourceCard.getPair().equals(SELECTED_CARD)){
+                    LEARNED_CARDS++;
+                    updateCounterLabel();
+                    if(endLevelCondition(sourceCard)){
+                        LEVELS_COMPLETED++;
+                        if(LEVELS_COMPLETED%NUM_COLS==0){
+                            NUM_CARDS += LEVEL_MULTIPLIER;
+                        }
+                        updateCards();
+                   }
+               }
+            }
+        }
+
+        cardsList.clear();
+        panel.removeAll();
+        var preprocessedData = prepareData();
+        var words = processData(preprocessedData);
+        
+        for(int word = 0, pair = 1; pair <= NUM_CARDS/2; word+=2, pair++){
+            MemoCard firstCard = new MemoCard(words.get(word));
+            MemoCard secondCard = new MemoCard(words.get(word+1));
+            MemoCard.makePair(firstCard, secondCard);
+            firstCard.addActionListener(new EndLevelListener());
+            secondCard.addActionListener(new EndLevelListener());
+            cardsList.add(firstCard);
+            cardsList.add(secondCard);
+        }
+        Collections.shuffle(cardsList);
+        for(MemoCard card: cardsList){
+            panel.add(card);
         }
     }
 
     private void updateCounterLabel(){
         pairsCountingLabel.setText("Очки: "+getLearnedCards());
+    }
+
+    private boolean endLevelCondition(MemoCard lastCard){
+        for(MemoCard card: cardsList){
+            if(!card.isMatched() && !card.equals(lastCard) && !card.equals(lastCard.getPair())){
+                return false;
+            }
+        }
+        return true;
     }
 
     public int getCardsNumber(){
@@ -139,7 +142,13 @@ public class LearningScreen extends CoreScreen {
     public int getLearnedCards(){
         return LEARNED_CARDS;
     }
-    public ArrayList<JButton> getButtons(){
-        return buttonsList;
+    public ArrayList<MemoCard> getButtons(){
+        return cardsList;
+    }
+    public static MemoCard getSelectedCard(){
+        return SELECTED_CARD;
+    }
+    public static void setSelectedCard(MemoCard card){
+        SELECTED_CARD = card;
     }
 }
