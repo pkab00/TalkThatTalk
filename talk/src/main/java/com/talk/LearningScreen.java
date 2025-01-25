@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.*;
 import java.util.*;
 import java.util.List;
@@ -18,6 +21,7 @@ public class LearningScreen extends CoreScreen {
     private ArrayList<MemoCard> cardsList = new ArrayList<>();
     private JPanel panel;
     private JLabel pairsCountingLabel;
+    private JLabel timerLabel;
     private MainScreen scr;
     
     public LearningScreen(MainScreen scr){
@@ -28,6 +32,7 @@ public class LearningScreen extends CoreScreen {
         setLayout(new BorderLayout());
         add(createTopBar(), BorderLayout.NORTH);
         add(createPanel(), BorderLayout.CENTER);
+        new TimerWotker(this).execute();
     }
 
     private JPanel createTopBar(){
@@ -37,11 +42,16 @@ public class LearningScreen extends CoreScreen {
         pairsCountingLabel.setFont(font);
         pairsCountingLabel.setText("Очки: "+LEARNED_CARDS);
         pairsCountingLabel.setForeground(MainScreen.THEME.getContrastTextColor());
+        timerLabel = new JLabel();
+        timerLabel.setFont(font);
+        timerLabel.setForeground(MainScreen.THEME.getContrastTextColor());
         topBar.setLayout(new BoxLayout(topBar, BoxLayout.Y_AXIS));
         topBar.setBackground(MainScreen.THEME.getContrastColor());
         
         topBar.add(Box.createHorizontalStrut(10));
         topBar.add(pairsCountingLabel);
+        topBar.add(Box.createHorizontalStrut(20));
+        topBar.add(timerLabel);
         return topBar;
     }
 
@@ -92,7 +102,7 @@ public class LearningScreen extends CoreScreen {
                     updateCounterLabel();
                     if(endLevelCondition(sourceCard)){
                         LEVELS_COMPLETED++;
-                        if(LEVELS_COMPLETED%NUM_COLS==0){
+                        if(LEVELS_COMPLETED%5==0){
                             NUM_CARDS += LEVEL_MULTIPLIER;
                         }
                         updateCards();
@@ -123,6 +133,10 @@ public class LearningScreen extends CoreScreen {
 
     private void updateCounterLabel(){
         pairsCountingLabel.setText("Очки: "+getLearnedCards());
+    }
+
+    public void updateTimer(String timeString){
+        timerLabel.setText(timeString);
     }
 
     private boolean endLevelCondition(MemoCard lastCard){
