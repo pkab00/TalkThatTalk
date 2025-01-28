@@ -160,3 +160,21 @@ Launcher:	C:\Users\Vadim Bushukin\OneDrive\Desktop\проекты\TalkThatTalk\J
 Launcher args:	-jar "C:\Users\Vadim Bushukin\OneDrive\Desktop\проекты\TalkThatTalk\TalkThatTalk.exe"
 Args length:	92/32768 chars
 Exit code:	0
+
+
+Version:	3.50
+CmdLine:	C:\Users\Vadim Bushukin\OneDrive\Desktop\проекты\TalkThatTalk\TalkThatTalk.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\Users\Vadim Bushukin\OneDrive\Desktop\проекты\TalkThatTalk\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	
+Java max ver:	
+JRE paths:	JRE
+Check launcher:	C:\Users\Vadim Bushukin\OneDrive\Desktop\проекты\TalkThatTalk\JRE\bin\javaw.exe (OK)
+Version string: 1.023.000_001 / 64-Bit (OK)
+Launcher:	C:\Users\Vadim Bushukin\OneDrive\Desktop\проекты\TalkThatTalk\JRE\bin\javaw.exe
+Launcher args:	-jar "C:\Users\Vadim Bushukin\OneDrive\Desktop\проекты\TalkThatTalk\TalkThatTalk.exe"
+Args length:	92/32768 chars
+Exit code:	0
