@@ -27,7 +27,6 @@ public class MemoCard extends JButton {
         this.setBackground(MainScreen.THEME.getMainColor1());
         this.setForeground(MainScreen.THEME.getContrastTextColor());
         this.setBorderPainted(false);
-        this.setEnabled(false);
         isMatched = false;
     }
 

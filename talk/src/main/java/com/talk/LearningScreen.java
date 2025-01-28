@@ -3,9 +3,10 @@ package com.talk;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.*;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
 import java.util.*;
@@ -22,17 +23,25 @@ public class LearningScreen extends CoreScreen {
     private JPanel panel;
     private JLabel pairsCountingLabel;
     private JLabel timerLabel;
-    private MainScreen scr;
     
-    public LearningScreen(MainScreen scr){
-        this.scr = scr;
+    public LearningScreen(){
         this.setTitle("Режим заучивания");
         this.setSize(NUM_COLS*600, 750);
         this.setResizable(true);
         setLayout(new BorderLayout());
         add(createTopBar(), BorderLayout.NORTH);
         add(createPanel(), BorderLayout.CENTER);
-        new TimerWorker(this).execute();
+        this.setVisible(true);
+        TimerWorker worker = new TimerWorker(this);
+        worker.execute();
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e){
+                worker.cancel(true);
+                dispose();
+            }
+        });
     }
 
     private JPanel createTopBar(){
@@ -137,6 +146,15 @@ public class LearningScreen extends CoreScreen {
 
     public void updateTimer(String timeString){
         timerLabel.setText(timeString);
+    }
+
+    public int blockAndFinish(){
+        for(var card: panel.getComponents()){
+            card.setEnabled(false);
+        }
+        int res = JOptionPane.showConfirmDialog(this, "Игра окончена!\nВаш счёт: "+getLearnedCards()+
+        "\nНачать сначала?", "Игра окончена", JOptionPane.YES_NO_OPTION);
+        return res;
     }
 
     private boolean endLevelCondition(MemoCard lastCard){

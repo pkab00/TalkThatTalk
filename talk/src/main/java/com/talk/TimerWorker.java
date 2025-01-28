@@ -26,6 +26,10 @@ public class TimerWorker extends SwingWorker<Void,String>{
      */
     protected Void doInBackground() throws Exception{
         while(!startTime.equals(finishTime)){
+            if(isCancelled()){
+                System.out.println("Task finished");
+                return null;
+            }
             publish(startTime.format(formatter));
             Thread.sleep(1000);
             startTime = startTime.minusSeconds(1);
@@ -51,6 +55,11 @@ public class TimerWorker extends SwingWorker<Void,String>{
      */
     protected void done(){
         UI.updateTimer(finishTime.format(formatter));
-        System.out.println("The task is done!");
+        if(isCancelled()) return;
+        int res = UI.blockAndFinish();
+        switch(res){
+            case 0: UI.dispose(); new LearningScreen();
+            case 1: UI.dispose();
+        }
     }
 }

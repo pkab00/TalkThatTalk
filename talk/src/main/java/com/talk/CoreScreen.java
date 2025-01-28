@@ -38,5 +38,9 @@ public abstract class CoreScreen extends JFrame {
         UIManager.put("TextField.font", FONT.deriveFont(fontSize));
         UIManager.put("OptionPane.buttonFont", FONT.deriveFont(fontSize));
         UIManager.put("OptionPane.messageFont", FONT.deriveFont(fontSize));
+
+        UIManager.put("OptionPane.yesButtonText", "Да");
+        UIManager.put("OptionPane.noButtonText", "Нет");
+        UIManager.put("OptionPane.cancelButtonText", "Отмена");
     }
 }

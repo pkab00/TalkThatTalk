@@ -117,8 +117,7 @@ public class CustomToolBar extends JToolBar {
             putValue(AbstractAction.SHORT_DESCRIPTION, "Начать заучивание...");
         }
         public void actionPerformed(ActionEvent e){
-            LearningScreen learningScreen = new LearningScreen(screen);
-            learningScreen.setVisible(true);
+            new LearningScreen();
         }
     }
 }
