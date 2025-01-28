@@ -32,7 +32,7 @@ public class LearningScreen extends CoreScreen {
         setLayout(new BorderLayout());
         add(createTopBar(), BorderLayout.NORTH);
         add(createPanel(), BorderLayout.CENTER);
-        new TimerWotker(this).execute();
+        new TimerWorker(this).execute();
     }
 
     private JPanel createTopBar(){
